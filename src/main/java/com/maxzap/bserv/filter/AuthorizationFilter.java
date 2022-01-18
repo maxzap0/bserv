@@ -1,12 +1,10 @@
-package filter;
+package com.maxzap.bserv.filter;
 
 import com.maxzap.bserv.service.TokenService;
-import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -17,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 @Component
-@Configuration
 @RequiredArgsConstructor
 public class AuthorizationFilter extends OncePerRequestFilter {
 
@@ -28,8 +26,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private boolean enabled;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("!!!!!!!!!!");
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
         if (!enabled)
             filterChain.doFilter(request, response);
 
@@ -46,14 +45,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private boolean checkAuthorization(String auth) {
         if (!auth.startsWith("Bearer "))
             return false;
-
         String token = auth.substring(7);
         return tokenService.checkToken(token);
-    }
-
-    @Override
-    protected void initFilterBean() throws ServletException {
-        super.initFilterBean();
-        System.out.println("filter bean was created");
     }
 }
