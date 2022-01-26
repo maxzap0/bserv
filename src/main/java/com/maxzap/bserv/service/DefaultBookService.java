@@ -43,4 +43,14 @@ public class DefaultBookService implements BookService{
                 .map(bookToEntityMapper::bookEntityToBook)
                 .toList();
     }
+
+    @Override
+    public void deleteById(long id) {
+        bookRepository.deleteById(id);
+    }
+
+    @Override
+    public long countBooks() {
+        return bookRepository.count();
+    }
 }

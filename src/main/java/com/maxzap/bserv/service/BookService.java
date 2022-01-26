@@ -9,4 +9,6 @@ public interface BookService {
     List<Book> getAllBook();
     void addBook (Book book);
     List<Book> findByAuthor(String author);
+    void deleteById (long id);
+    long countBooks();
 }
