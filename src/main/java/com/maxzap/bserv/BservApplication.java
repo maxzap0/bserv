@@ -8,10 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BservApplication {
 
-
     public static void main(String[] args) {
         SpringApplication.run(BservApplication.class, args);
         log.info("<<<---RUN--->>>");
+
     }
 
 }
